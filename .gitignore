@@ -9,10 +9,26 @@ venv/
 __pycache__/
 *.py[cod]
 *.pyo
+*.log
+*.pyc
+*.pyd
 
 #
 .env
 .env.*
 
 *.sqlite3
-*.log
+
+instance/
+*.db
+migrations/
+*.pot
+*.mo
+*.egg-info/
+dist/
+build/
+coverage.xml
+htmlcov/
+*.cover
+*.pid
+*.swp
