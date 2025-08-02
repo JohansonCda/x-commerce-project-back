@@ -1,2 +1,18 @@
-.env
+
 /libreries
+.vscode/
+
+venv.*
+venv/
+
+# Ignorar archivos temporales de Python
+__pycache__/
+*.py[cod]
+*.pyo
+
+#
+.env
+.env.*
+
+*.sqlite3
+*.log
