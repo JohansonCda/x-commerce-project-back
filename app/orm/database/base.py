@@ -1,19 +1,18 @@
-from sqlalchemy.orm import declarative_base
-from . import engine
+import os
+from flask_sqlalchemy import SQLAlchemy
 
-Base = declarative_base()
+# Load environment variables
 
+db = SQLAlchemy()
 
-def create_tables():
+def create_tables(app):
     """
-    Creates all tables defined in SQLAlchemy models.
-    
-    Raises:
-        Exception: If table creation fails, the original exception is re-raised.
+    Creates all tables defined in SQLAlchemy models using the Flask app context.
     """
     try:
-        Base.metadata.create_all(bind=engine)
-        print("✅ Tables created successfully.")
+        with app.app_context():
+            db.create_all()
+            print("✅ Tables created successfully.")
     except Exception as e:
         print(f"❌ Error creating tables: {e}")
-        raise  # Re-raise the exception for external handling
+        raise e

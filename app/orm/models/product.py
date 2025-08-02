@@ -1,17 +1,15 @@
-from sqlalchemy import Column, BigInteger, String, Text, Numeric, Integer, Boolean, DateTime
-from ..database.base import Base
 from datetime import datetime, timezone
+from ..database import db
 
-class Product(Base):
+class Product(db.Model):
     __tablename__ = 'product'
 
-    id = Column(BigInteger, primary_key=True)
-    name = Column(String(255), nullable=False)
-    description = Column(Text, nullable=True)
-    price = Column(Numeric(10, 2), nullable=False)
-    stock = Column(Integer, nullable=False)
-    enable = Column(Boolean, default=True)
-    register = Column(DateTime(timezone=True), default=lambda: datetime.now(timezone.utc))
-    updated = Column(DateTime(timezone=True), default=lambda: datetime.now(timezone.utc), onupdate=lambda: datetime.now(timezone.utc))
-
-    # relationships
+    id = db.Column(db.BigInteger, primary_key=True)
+    name = db.Column(db.String(255), nullable=False)
+    description = db.Column(db.Text, nullable=True)
+    price = db.Column(db.Numeric(10, 2), nullable=False)
+    stock = db.Column(db.Integer, nullable=False)
+    enable = db.Column(db.Boolean, default=True)
+    register = db.Column(db.DateTime(timezone=True), default=lambda: datetime.now(timezone.utc))
+    updated = db.Column(db.DateTime(timezone=True), default=lambda: datetime.now(timezone.utc), 
+              onupdate=lambda: datetime.now(timezone.utc))
