@@ -52,8 +52,32 @@ class ProductController(BaseController[Product, ProductCreate, ProductRead, Prod
             .all()
         )
         return [ProductRead.model_validate(obj) for obj in objs]
+    
+    def get_by_category(self, category_id: int, enabled: bool = True) -> List[ProductRead]:
+        """Get products by category id"""
+        objs = (
+            db.session.query(self.model)
+            .filter(
+                self.model.category_id == category_id,
+                self.model.enable == enabled
+            )
+            .all()
+        )
+        return [ProductRead.model_validate(obj) for obj in objs]
+    
+    def get_by_category_name(self, category_name: str, enabled: bool = True) -> List[ProductRead]:
+        """Get products by category name"""
+        objs = (
+            db.session.query(self.model)
+            .join(self.model.category)
+            .filter(
+                self.model.category.has(name=category_name),
+                self.model.enable == enabled
+            )
+            .all()
+        )
+        return [ProductRead.model_validate(obj) for obj in objs]
 
     def _validate_create(self, obj_in: ProductCreate):
         """Validation hook called automatically from BaseController.create()"""
-        # Add custom validation logic here if needed
         pass
