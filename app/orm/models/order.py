@@ -1,5 +1,5 @@
 from time import timezone
-from app import db
+from ..database import db
 from datetime import datetime
 
 class Order(db.Model):
