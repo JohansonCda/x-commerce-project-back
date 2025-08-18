@@ -1,6 +1,6 @@
 from .product import Product
 from .category import Category
-from .order_Detail import OrderDetail
+from .order_detail import OrderDetail
 from .order import Order
 from .user import User
 from .refresh_token import Refresh_Token
