@@ -17,3 +17,4 @@ class Product(db.Model):
               onupdate=lambda: datetime.now(timezone.utc))
     
     category = db.relationship('Category', back_populates='products')
+    order_details = db.relationship('OrderDetail', back_populates='product', lazy='dynamic')

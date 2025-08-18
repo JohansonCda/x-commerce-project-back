@@ -1,6 +1,4 @@
-
 from datetime import datetime, timezone
-from app.orm.models import order
 from ..database import db
 
 class User(db.Model):
@@ -8,6 +6,7 @@ class User(db.Model):
 
 	id = db.Column(db.BigInteger, primary_key=True)
 	username = db.Column(db.String(100), nullable=False, unique=True)
+	full_name = db.Column(db.String(100), nullable=False)
 	email = db.Column(db.String(100), nullable=False, unique=True)
 	password = db.Column(db.String(100), nullable=False)
 	phone = db.Column(db.String(15), nullable=False)
@@ -20,3 +19,4 @@ class User(db.Model):
     # Relationships
 	#products = db.relationship('Product', back_populates='category', lazy='dynamic')
 	orders = db.relationship('Order', back_populates='user', lazy='dynamic')
+	refresh_tokens = db.relationship('Refresh_Token', back_populates='user', lazy='dynamic')
