@@ -14,4 +14,5 @@ class Config:
     if not DATABASE_URL:
         raise ValueError("DATABASE_URL environment variable is not set.")
     SQLALCHEMY_DATABASE_URI = DATABASE_URL
+    UPLOAD_FOLDER = os.getenv("UPLOAD_FOLDER")
     SQLALCHEMY_TRACK_MODIFICATIONS = False

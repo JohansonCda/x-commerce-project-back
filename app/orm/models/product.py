@@ -18,3 +18,4 @@ class Product(db.Model):
     
     category = db.relationship('Category', back_populates='products')
     order_details = db.relationship('OrderDetail', back_populates='product', lazy='dynamic')
+    images = db.relationship('ProductImage', back_populates='product', lazy='dynamic')
