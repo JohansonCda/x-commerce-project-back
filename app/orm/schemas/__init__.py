@@ -1,5 +1,8 @@
 from .product_schema import ProductCreate, ProductUpdate, ProductRead
 from .category_schema import CategoryCreate, CategoryRead, CategoryUpdate
+from .user_schema import UserCreate, UserRead, UserUpdate
+from .status_schema import StatusCreate, StatusRead, StatusUpdate
+from .pay_schema import PayCreate, PayRead, PayUpdate
 
 
 __all__ = [
@@ -8,5 +11,14 @@ __all__ = [
     "ProductRead",
     "CategoryCreate",
     "CategoryRead",
-    "CategoryUpdate"
+    "CategoryUpdate",
+    "UserCreate",
+    "UserRead",
+    "UserUpdate",
+    "StatusCreate",
+    "StatusRead",
+    "StatusUpdate",
+    "PayCreate",
+    "PayRead",
+    "PayUpdate"
 ]

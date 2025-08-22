@@ -7,9 +7,11 @@ class CategoryBase(BaseModel):
     description: Optional[str] = Field(None, description="Category description")
     enable: bool = Field(default=True, description="Whether the category is enabled")
 
-class CategoryCreate(CategoryBase):
+class CategoryCreate(BaseModel):
     """Schema for creating new categories"""
-    pass
+    name: str = Field(..., max_length=100, description="Category name")
+    description: Optional[str] = Field(None, description="Category description")
+    enable: bool = Field(default=True, description="Whether the category is enabled")
 
 class CategoryUpdate(BaseModel):
     """Schema for updating categories"""
