@@ -3,6 +3,7 @@ from ..database import db
 from .base_controller import BaseController
 from ..models.product import Product
 from ..schemas.product_schema import ProductCreate, ProductUpdate, ProductRead
+from ..schemas.product_image_schema import ProductImageRead
 
 class ProductController(BaseController[Product, ProductCreate, ProductRead, ProductUpdate]):
     def __init__(self):
@@ -77,6 +78,19 @@ class ProductController(BaseController[Product, ProductCreate, ProductRead, Prod
             .all()
         )
         return [ProductRead.model_validate(obj) for obj in objs]
+
+    def get_with_images(self, product_id: int) -> ProductRead | None:
+        """Get a product and all its images"""
+        obj = db.session.query(self.model).filter(self.model.id == product_id).first()
+        if not obj:
+            return None
+
+        images = obj.images.all() if hasattr(obj.images, 'all') else list(obj.images)
+
+        product_data = ProductRead.model_validate(obj).model_dump()
+        
+        product_data['images'] = [ProductImageRead.model_validate(img).model_dump() for img in images]
+        return product_data
 
     def _validate_create(self, obj_in: ProductCreate):
         """Validation hook called automatically from BaseController.create()"""
