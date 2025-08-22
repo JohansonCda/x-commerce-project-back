@@ -13,3 +13,4 @@ class Order(db.Model):
   
     user = db.relationship("User", back_populates="orders")
     details = db.relationship("OrderDetail", back_populates="order", cascade="all, delete-orphan")
+    pays = db.relationship("Pay", back_populates="order", lazy="dynamic")

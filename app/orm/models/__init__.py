@@ -4,6 +4,8 @@ from .order_detail import OrderDetail
 from .order import Order
 from .user import User
 from .refresh_token import Refresh_Token
+from .status import Status
+from .pay import Pay
 
 __all__ = [
     "Product",
@@ -11,5 +13,7 @@ __all__ = [
     "OrderDetail",
     "Order",
     "User",
-    "Refresh_Token"
+    "Refresh_Token",
+    "Status",
+    "Pay"
 ]
