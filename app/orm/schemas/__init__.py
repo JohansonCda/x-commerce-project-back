@@ -2,7 +2,7 @@ from .product_schema import ProductCreate, ProductUpdate, ProductRead
 from .category_schema import CategoryCreate, CategoryRead, CategoryUpdate
 from .user_schema import UserCreate, UserRead, UserUpdate
 from .status_schema import StatusCreate, StatusRead, StatusUpdate
-from .pay_schema import PayCreate, PayRead, PayUpdate
+from .payment_schema import PaymentCreate, PaymentRead, PaymentUpdate
 
 
 __all__ = [
@@ -18,7 +18,7 @@ __all__ = [
     "StatusCreate",
     "StatusRead",
     "StatusUpdate",
-    "PayCreate",
-    "PayRead",
-    "PayUpdate"
+    "PaymentCreate",
+    "PaymentRead",
+    "PaymentUpdate"
 ]

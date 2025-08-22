@@ -1,7 +1,7 @@
 from .base_controller import BaseController
 from .product_controller import ProductController
 from .category_controller import CategoryController
-from .pay_controller import PayController
+from .payment_controller import PaymentController
 from .status_controller import StatusController
 
 
@@ -9,6 +9,6 @@ __all__ = [
     "BaseController",
     "ProductController",
     "CategoryController",
-    "PayController",
+    "PaymentController",
     "StatusController"
 ]

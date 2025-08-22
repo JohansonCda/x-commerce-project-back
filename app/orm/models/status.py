@@ -11,4 +11,4 @@ class Status(db.Model):
     updated = db.Column(db.DateTime(timezone=True), default=lambda: datetime.now(timezone.utc), 
               onupdate=lambda: datetime.now(timezone.utc))
 
-    pays = db.relationship('Pay', back_populates='status', lazy='dynamic')
+    payments = db.relationship('Payment', back_populates='status', lazy='dynamic')
