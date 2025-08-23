@@ -7,11 +7,15 @@ from .auth.jwt_config import configure_jwt
 from app.routes.auth_routes import auth_ns
 from app.routes.main_routes import main_ns
 from app.routes import products_ns, images_ns
+
 from .orm.models import *
+from app.utils.logging_manager import logging_manager, register_flask_logging_hooks
 
 def create_app():
     app = Flask(__name__)
     app.url_map.strict_slashes = False
+
+    register_flask_logging_hooks(app)
 
     authorizations = {
         'Bearer Auth': {
@@ -32,8 +36,6 @@ def create_app():
         authorizations=authorizations,
         security='Bearer Auth'
     )
-
-
 
     app.config.from_object(Config)
 
