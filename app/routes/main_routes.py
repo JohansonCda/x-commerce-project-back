@@ -1,15 +1,16 @@
-from flask import Blueprint, jsonify
-from ..orm.schemas import UserCreate
-from ..orm.controllers.user_controller import UserController
+from flask_restx import Namespace, Resource, fields
+from werkzeug.exceptions import NotFound
 
-main_bp = Blueprint("main", __name__)
+# Create namespace for main
+main_ns = Namespace('main', description='Main operations')
 
-@main_bp.route("/", methods=["GET"])
-def index():
-    user_controller = UserController()
-    user1 = user_controller.get_by_email("johndoe@example.com")
-    user2 = user_controller.get_by_register_date("2023-01-01", "2026-12-31")
-    print(user2)
-    return jsonify({"message": "API corriendo..."})
+# Response model (optional, for documentation)
+error_model = main_ns.model('Error', {
+    'message': fields.String(description='Error message')
+})
 
-
+@main_ns.route("/", methods=["GET"])
+@main_ns.response(404, 'Page not found', error_model)
+class IndexResource(Resource):
+    def get(self):
+        return {"message": "API corriendo..."}

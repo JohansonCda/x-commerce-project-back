@@ -47,7 +47,7 @@ class ProductImageController(BaseController[ProductImage, ProductImageCreate, Pr
 
     def register_image(self, product_id: int, filename: str, is_main: bool = False, alt: str | None = None) -> ProductImageRead:
         """
-        Registra en la base de datos una imagen que ya existe en el filesystem.
+        Registers in the database an image that already exists in the filesystem.
         """
         ruta_db = os.path.join(current_app.config["UPLOAD_FOLDER"], filename)
         ruta_db = Path(ruta_db).as_posix()
