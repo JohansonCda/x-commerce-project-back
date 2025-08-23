@@ -22,7 +22,16 @@ class ProductImageController(BaseController[ProductImage, ProductImageCreate, Pr
         )
         return [ProductImageRead.model_validate(obj) for obj in objs]
     
-
+    def get_by_product_name(self, product_name: str) -> List[ProductImageRead]:
+        """Get all images for a product by product name"""
+        from ..models.product import Product
+        objs = (
+            db.session.query(self.model)
+            .join(Product, self.model.product_id == Product.id)
+            .filter(Product.name == product_name)
+            .all()
+        )
+        return [ProductImageRead.model_validate(obj) for obj in objs]
 
     def get_by_product(self, product_id: int) -> List[ProductImageRead]:
         """Get all images for a product"""
@@ -47,9 +56,9 @@ class ProductImageController(BaseController[ProductImage, ProductImageCreate, Pr
 
     def register_image(self, product_id: int, filename: str, is_main: bool = False, alt: str | None = None) -> ProductImageRead:
         """
-        Registra en la base de datos una imagen que ya existe en el filesystem.
+        Registers in the database an image that already exists in the filesystem.
         """
-        ruta_db = os.path.join(current_app.config["UPLOAD_FOLDER"], filename)
+        ruta_db = os.path.join(current_app.config["UPLOAD_FOLDER_REL"], filename)
         ruta_db = Path(ruta_db).as_posix()
 
         obj_in = ProductImageCreate(
