@@ -7,7 +7,7 @@ from .auth.jwt_config import configure_jwt
 from app.routes.auth_routes import auth_ns
 from app.routes.main_routes import main_ns
 from app.routes.image_routes import images_ns
-from app.routes.product_routes import products_ns
+from app.routes import products_ns
 from .orm.models import *
 
 def create_app():
