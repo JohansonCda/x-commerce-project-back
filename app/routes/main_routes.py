@@ -9,7 +9,7 @@ error_model = main_ns.model('Error', {
     'message': fields.String(description='Error message')
 })
 
-@main_ns.route("/", methods=["GET"])
+@main_ns.route("", methods=["GET"])
 @main_ns.response(404, 'Page not found', error_model)
 class IndexResource(Resource):
     def get(self):

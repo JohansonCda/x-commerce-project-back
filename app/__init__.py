@@ -46,8 +46,9 @@ def create_app():
 
     # Register routes
     api.add_namespace(auth_ns, path='/auth')
+    api.add_namespace(main_ns, path='/')
     api.add_namespace(products_ns, path='/product')
     api.add_namespace(images_ns, path='/image')
-    api.add_namespace(main_ns, path='/')
+    
 
     return app
