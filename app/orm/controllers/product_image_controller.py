@@ -58,7 +58,7 @@ class ProductImageController(BaseController[ProductImage, ProductImageCreate, Pr
         """
         Registers in the database an image that already exists in the filesystem.
         """
-        ruta_db = os.path.join(current_app.config["UPLOAD_FOLDER"], filename)
+        ruta_db = os.path.join(current_app.config["UPLOAD_FOLDER_REL"], filename)
         ruta_db = Path(ruta_db).as_posix()
 
         obj_in = ProductImageCreate(

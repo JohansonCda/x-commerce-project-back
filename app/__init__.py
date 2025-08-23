@@ -1,13 +1,12 @@
 from flask import Flask
-from flask_restx import Api, Resource, fields
+from flask_restx import Api
 from .orm.database.base import db
 #from flask_jwt_extended import JWTManager
 from app.config.config import Config
 from .auth.jwt_config import configure_jwt 
 from app.routes.auth_routes import auth_ns
 from app.routes.main_routes import main_ns
-from app.routes.image_routes import images_ns
-from app.routes import products_ns
+from app.routes import products_ns, images_ns
 from .orm.models import *
 
 def create_app():

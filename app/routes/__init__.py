@@ -1,4 +1,4 @@
-from .image_routes import images_ns
+from .image import images_ns
 from .main_routes import main_ns
 from .auth_routes import auth_ns
 from .product import products_ns

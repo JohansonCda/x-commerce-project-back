@@ -1,14 +1,13 @@
 from flask import current_app, send_from_directory
-from flask_restx import Namespace, Resource, fields
+from flask_restx import Resource, fields
 from werkzeug.exceptions import NotFound
-
-images_ns = Namespace('image', description='Image operations')
+from app.routes.image import images_ns
 
 error_model = images_ns.model('Error', {
     'message': fields.String(description='Error message')
 })
 
-@images_ns.route('/product/<string:filename>')
+@images_ns.route('/<string:filename>')
 @images_ns.param('filename', 'Image filename')
 @images_ns.response(404, 'Image not found', error_model)
 class ProductImageResource(Resource):
