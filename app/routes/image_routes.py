@@ -2,10 +2,8 @@ from flask import current_app, send_from_directory
 from flask_restx import Namespace, Resource, fields
 from werkzeug.exceptions import NotFound
 
-# Create namespace for images
 images_ns = Namespace('image', description='Image operations')
 
-# Response model (optional, for documentation)
 error_model = images_ns.model('Error', {
     'message': fields.String(description='Error message')
 })

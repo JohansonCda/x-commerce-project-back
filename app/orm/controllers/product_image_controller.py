@@ -22,7 +22,16 @@ class ProductImageController(BaseController[ProductImage, ProductImageCreate, Pr
         )
         return [ProductImageRead.model_validate(obj) for obj in objs]
     
-
+    def get_by_product_name(self, product_name: str) -> List[ProductImageRead]:
+        """Get all images for a product by product name"""
+        from ..models.product import Product
+        objs = (
+            db.session.query(self.model)
+            .join(Product, self.model.product_id == Product.id)
+            .filter(Product.name == product_name)
+            .all()
+        )
+        return [ProductImageRead.model_validate(obj) for obj in objs]
 
     def get_by_product(self, product_id: int) -> List[ProductImageRead]:
         """Get all images for a product"""
