@@ -6,7 +6,7 @@ from app.config.config import Config
 from .auth.jwt_config import configure_jwt 
 from app.routes.auth_routes import auth_ns
 from app.routes.main_routes import main_ns
-from app.routes import products_ns, images_ns, categories_ns
+from app.routes import products_ns, images_ns, categories_ns, payments_ns
 
 from .orm.models import *
 from app.utils.logging_manager import logging_manager, register_flask_logging_hooks
@@ -51,5 +51,6 @@ def create_app():
     api.add_namespace(products_ns, path='/product')
     api.add_namespace(images_ns, path='/image')
     api.add_namespace(categories_ns, path='/category')
+    api.add_namespace(payments_ns, path='/payment')
 
     return app
