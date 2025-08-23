@@ -6,6 +6,7 @@ from .user import User
 from .refresh_token import Refresh_Token
 from .status import Status
 from .payment import Payment
+from .product_image import ProductImage
 
 __all__ = [
     "Product",
@@ -15,5 +16,6 @@ __all__ = [
     "User",
     "Refresh_Token",
     "Status",
-    "Payment"
+    "Payment",
+    "ProductImage"
 ]
