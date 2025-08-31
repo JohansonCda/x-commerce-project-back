@@ -4,6 +4,7 @@ from .auth_routes import auth_ns
 from .product import products_ns
 from .category import categories_ns
 from .payment import payments_ns
+from .user import users_ns
 
 __all__ = [
     "images_ns",
@@ -11,5 +12,6 @@ __all__ = [
     "auth_ns",
     "products_ns",
     "categories_ns",
-    "payments_ns"
+    "payments_ns",
+    "users_ns"
 ]
