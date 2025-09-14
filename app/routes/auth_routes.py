@@ -3,6 +3,7 @@ from flask_restx import Namespace, Resource, fields
 from flask_jwt_extended import jwt_required, get_jwt_identity, get_jwt
 from app.services.auth_services import AuthService
 from app.auth.decorators import token_required
+from app.controllers.token_controller import TokenController
 
 auth_ns = Namespace('auth', description='Authentication operations')
 
@@ -70,30 +71,34 @@ class RefreshResource(Resource):
     @auth_ns.doc(security='Bearer Auth')
     @auth_ns.response(200, 'Token refreshed', model=auth_ns.model('RefreshResponse', {
         'access_token': fields.String,
-        'token_type': fields.String
+        'token_type': fields.String,
+        'expires_in': fields.Integer,
+        'user': fields.Nested(user_model),
+        'message': fields.String
     }))
+    @auth_ns.response(401, 'Invalid refresh token', error_model)
     @jwt_required(refresh=True)
     def post(self):
-        """Refresh token endpoint"""
-        current_user_id = get_jwt_identity()
-        user_id = int(current_user_id) if str(current_user_id).isdigit() else current_user_id
-        new_token = AuthService.create_access_token(user_id)
-        return {
-            'access_token': new_token,
-            'token_type': 'Bearer'
-        }, 200
+        """Refresh token endpoint using TokenController"""
+        response_data, status_code = TokenController.refresh_access_token()
+        return response_data, status_code
 
 @auth_ns.route('/logout')
 class LogoutResource(Resource):
     @auth_ns.doc(security='Bearer Auth')
     @auth_ns.response(200, 'Successfully logged out', model=auth_ns.model('LogoutResponse', {
-        'message': fields.String
+        'message': fields.String,
+        'revoked_token_id': fields.String,
+        'token_type': fields.String,
+        'user_id': fields.String,
+        'revoked_at': fields.String
     }))
     @auth_ns.response(401, 'Invalid token', error_model)
     @jwt_required()
     def post(self):
-        """Logout endpoint - Requires valid JWT token"""
-        return {'message': 'Successfully logged out'}, 200
+        """Logout endpoint using TokenController - Requires valid JWT token"""
+        response_data, status_code = TokenController.revoke_token()
+        return response_data, status_code
 
 @auth_ns.route('/me')
 class MeResource(Resource):
