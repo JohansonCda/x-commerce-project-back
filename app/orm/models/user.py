@@ -17,6 +17,5 @@ class User(db.Model):
 						onupdate=lambda: datetime.now(timezone.utc))
 
     # Relationships
-	#products = db.relationship('Product', back_populates='category', lazy='dynamic')
 	orders = db.relationship('Order', back_populates='user', lazy='dynamic')
 	refresh_tokens = db.relationship('Refresh_Token', back_populates='user', lazy='dynamic')

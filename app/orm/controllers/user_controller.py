@@ -1,7 +1,6 @@
 from datetime import datetime
 from typing import List
-
-from app.orm.schemas.category_schema import CategoryRead
+import re
 from ..database import db
 from .base_controller import BaseController
 from ..models.user import User
@@ -29,6 +28,18 @@ class UserController(BaseController[User, UserCreate, UserRead, UserUpdate]):
             db.session.query(self.model)
             .filter(
                 self.model.email == email,
+                self.model.enable == enabled
+            )
+            .all()
+        )
+        return [UserRead.model_validate(obj) for obj in objs]
+    
+    def get_by_username(self, username: str, enabled: bool = True) -> List[UserRead]:
+        """Get users by username"""
+        objs = (
+            db.session.query(self.model)
+            .filter(
+                self.model.username == username,
                 self.model.enable == enabled
             )
             .all()
@@ -70,4 +81,25 @@ class UserController(BaseController[User, UserCreate, UserRead, UserUpdate]):
 
     def _validate_create(self, obj_in: UserCreate):
         """Validation hook called automatically from BaseController.create()"""
-        pass
+        # Email format validation
+        email_pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
+        if not re.match(email_pattern, obj_in.email):
+            raise ValueError("Invalid email format")
+        
+        # Check if email already exists
+        existing_email = (
+            db.session.query(self.model)
+            .filter(self.model.email == obj_in.email)
+            .first()
+        )
+        if existing_email:
+            raise ValueError(f"Email '{obj_in.email}' is already registered")
+        
+        # Check if username already exists
+        existing_username = (
+            db.session.query(self.model)
+            .filter(self.model.username == obj_in.username)
+            .first()
+        )
+        if existing_username:
+            raise ValueError(f"Username '{obj_in.username}' is already taken")

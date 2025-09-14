@@ -5,8 +5,9 @@ from .orm.database.base import db
 from app.config.config import Config
 from .auth.jwt_config import configure_jwt 
 from app.routes.auth_routes import auth_ns
+from app.routes.token_routes import token_bp
 from app.routes.main_routes import main_ns
-from app.routes import products_ns, images_ns, categories_ns, payments_ns
+from app.routes import products_ns, images_ns, categories_ns, payments_ns, users_ns
 
 from .orm.models import *
 from app.utils.logging_manager import logging_manager, register_flask_logging_hooks
@@ -47,10 +48,15 @@ def create_app():
 
     # Register routes
     api.add_namespace(auth_ns, path='/auth')
+    api.add_namespace(users_ns, path='/user')
     api.add_namespace(main_ns, path='/')
     api.add_namespace(products_ns, path='/product')
     api.add_namespace(images_ns, path='/image')
     api.add_namespace(categories_ns, path='/category')
     api.add_namespace(payments_ns, path='/payment')
+    
+    # Register additional blueprints (not using RESTX)
+    app.register_blueprint(token_bp)
+    
 
     return app

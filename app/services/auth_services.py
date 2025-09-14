@@ -22,12 +22,13 @@ class AuthService:
         }
 
     @staticmethod
-    def create_access_token(user_id: int, expires_delta: Optional[timedelta] = None) -> str:
-        """Create a new access token"""
+    def create_access_token(user_id: int, expires_delta: Optional[timedelta] = None, additional_claims: Optional[Dict[str, Any]] = None) -> str:
+        """Create a new access token with optional additional claims"""
         # Convert user_id to string as required by JWT
         user_id_str = str(user_id)
         
         return create_access_token(
             identity=user_id_str,
-            expires_delta=expires_delta
+            expires_delta=expires_delta,
+            additional_claims=additional_claims or {}
         )
